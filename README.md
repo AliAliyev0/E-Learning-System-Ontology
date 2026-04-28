@@ -1,31 +1,41 @@
-# 🎓 E-Learning System Ontology Project
+🎓 E-Learning System Ontology Project
+Overview
+This project is a sophisticated modeling study that structures the core components of an e-learning platform—including students, instructors, courses, assignments, and grades. Developed using the OWL/RDF format and verified via Protégé, the ontology ensures logical consistency and supports complex academic queries.  
 
-Hi there! This project is a modeling study that connects the core components of an e-learning platform—such as students, instructors, courses, assignments, and grades. We built the ontology using the **OWL/RDF** format and verified everything using **Protégé** to ensure logical consistency.
+👥 Meet the Team
+We are a team of four collaborators who structured this system:
 
-## 👥 Meet the Team
+Haydar Mehdizade (220315091) — Specification Writer (Member A): Authored the foundational documentation, including the Purpose, Scope, Intended Uses, and End-User definitions.  
+Jalil Guliyev (220315102) — Ontology Architecture Expert (Member B): Established the core taxonomy and hierarchy, defining the "is-a" relationships between classes like Person, AcademicContent, and Assessment.  
+Fatma Alsaghir (220315105) — Lead Ontology Engineer (Member C): Defined the functional requirements through Competency Questions and engineered the Object/Data Properties while ensuring logical consistency.  
+Mahammadali Aliyev (220315090) — GitHub, Instances & Glossary Manager (Member D): Managed the GitHub repository and README, prepared the pre-glossary of terms, and populated the ontology with practical instances (individuals).  
 
-We are a team of four classmates who collaborated on this project:
+🛠 Technical Features
+Core Classes
 
-* **Fatma Alsaghir (220315105) — Content & Scope Writer**
-    * Defined the purpose and boundaries of the system; documented what the ontology covers and what it leaves out.
-* **Jalil Guliyev (220315102) — Structure & Hierarchy Designer**
-    * Established the core classes (Student, Instructor, Course, etc.) and their hierarchical "is-a" relationships.
-* **Mahammadali Aliyev (220315090) — Relationship & Rules Architect**
-    * Defined the rules like "Which instructor teaches which course?" and implemented logical properties such as Transitive and Functional constraints.
-* **Heydar Mehdizade (220315091) — Instance & GitHub Manager**
-    * Managed the GitHub repository, prepared the documentation, and added the team members and a sample course (Job Safety) as "instances" into the ontology.
+Person: Subclasses include Student and Instructor.  
+Academic Content: Includes Course and Module.  
+Assessment: Covers Assignment and Submission.  
+Evaluation: Specifically the Grade class.  
 
-## 🛠 What's Inside?
 
-* **Classes:** Person (Student, Instructor), Academic Content (Course, Module), Assessment (Assignment, Submission), and Evaluation (Grade).
-* **Relationships:** Enrollment (`enrolledIn`), Teaching (`teaches`), Prerequisites (`hasPrerequisite`), and Grading (`hasGrade`).
-* **Sample Data:** All team members are defined as students; additionally, our presentation topic "Job Safety Course (SAFE101)" is active in the system.
+Logical Properties & Rules
 
-## 🚀 How to Use
+Transitivity: The hasPrerequisite property is transitive; if Course A requires B, and B requires C, the system infers that A requires C.  
+Inverse Relationships: Bidirectional navigation is supported through inverse properties like enrolledIn ↔ hasStudent and teaches ↔ isTaughtBy.  
+Functionality: Constraints ensure data integrity, such as ensuring a Submission is linked to exactly one Grade.  
 
-1.  Download the **.rdf** file from this repository.
-2.  Open **Protégé** and load the file.
-3.  You can explore the hierarchy in the **Entities** tab and see our names in the **Individuals** tab.
+🚀 Sample Data & Testing
+The ontology is pre-populated with a sample environment to demonstrate its capabilities:
+Active Course: CS-550: Knowledge Engineering and Ontologies taught by Dr. Alan Smith.  
+Student Instances: All team members are enrolled in the system.  
+Sample Assessment: A specific submission for the GitHubRepo assignment is recorded for Fatma Alsaghir, featuring a score of 100.0.  
 
----
-*Created on: April 25, 2026*
+📊 How to Use
+Download the E-Learning_Ontology.rdf file from this repository.
+
+Open Protégé and load the file.
+Navigate to the Entities tab to explore the hierarchy or the Individuals tab to see the team and course data.  
+Run a Reasoner (e.g., HermiT or Pellet) to verify logical consistency.  
+
+Created on: April 25, 2026
