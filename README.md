@@ -6,8 +6,11 @@ Team Members and Contributions:
 This project was developed collaboratively by a team of four members:
 
 Haydar Mehdizade (220315091) — Specification Writer (Member A): Responsible for writing the main documentation, including Purpose, Scope, Intended Uses, and End-User definitions.
+
 Jalil Guliyev (220315102) — Ontology Architect (Member B): Designed the class hierarchy and defined the core concepts and “is-a” relationships.
+
 Fatma Alsaghir (220315105) — Lead Ontology Engineer (Member C): Defined object and data properties, developed competency questions, and ensured logical consistency.
+
 Mahammadali Aliyev (220315090) — GitHub, Instances, and Glossary Manager (Member D): Managed the GitHub repository, prepared the README, created example instances, and contributed to the glossary.
 
 
