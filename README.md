@@ -1,60 +1,25 @@
-E-Learning System Ontology Project Overview
+E-Learning System Ontology (v2)
+This project presents a formal ontology model structured to represent core components of an e-learning platform. The architecture has been refactored in Version 2 to follow professional Knowledge Engineering standards.
 
-This project presents a basic ontology model that structures the core components of an e-learning platform, including students, instructors, courses, modules, assignments, submissions, and grades. The ontology is developed using the OWL/RDF format and implemented in Protégé. It ensures logical consistency and supports basic academic queries.
+🏗 Architectural Design: TBox vs. ABox Separation
+In this version, we have decoupled the conceptual schema from the individual data to ensure a modular and scalable system architecture.
 
-Team Members and Contributions:
-This project was developed collaboratively by a team of four members:
+elearning-tbox.ttl (Schema Layer): Contains the core classes (e.g., Person, Course), properties (e.g., hasPrerequisite), and logical axioms/restrictions. This layer defines the "rules" of the domain.
 
-Haydar Mehdizade (220315091) — Specification Writer (Member A): Responsible for writing the main documentation, including Purpose, Scope, Intended Uses, and End-User definitions.
+elearning-abox.ttl (Data Layer): Contains the individuals (instances) and their specific relationships. This layer represents the "knowledge base" populated with real-world data.
 
-Jalil Guliyev (220315102) — Ontology Architect (Member B): Designed the class hierarchy and defined the core concepts and “is-a” relationships.
+Technical Advantages
+Modularity: The schema can be reused across different educational datasets without modification.
 
-Fatma Alsaghir (220315105) — Lead Ontology Engineer (Member C): Defined object and data properties, developed competency questions, and ensured logical consistency.
+Data Independence: The ABox can be programmatically updated (e.g., via LLM-based population) without affecting the core logic.
 
-Mahammadali Aliyev (220315090) — GitHub, Instances, and Glossary Manager (Member D): Managed the GitHub repository, prepared the README, created example instances, and contributed to the glossary.
+Reasoning Efficiency: Separating assertions from axioms allows for cleaner consistency checks using OWL reasoners (HermiT/Pellet).
 
+🛠 Technical Stack
+Language: OWL 2 (Turtle Syntax)
 
-Core Classes:
+Editor: Protégé 5.x
 
-Person: Includes Student and Instructor.
-AcademicContent: Includes Course and Module.
-Assessment: Includes Assignment.
-Submission: Modeled as a separate class representing student submissions.
-Evaluation: Includes Grade.
+Reasoning: Transitive property chains and Cardinality restrictions for automated inference.
 
-
-Logical Properties and Features:
-
-Transitivity: The hasPrerequisite property is transitive, allowing inference across prerequisite chains.
-Inverse Relationships: The ontology includes inverse properties such as enrolledIn ↔️ hasStudent and teaches ↔️ isTaughtBy.
-Functional Properties: Certain data properties (e.g., submissionDate, courseCode) are defined as functional to ensure a single value per instance.
-
-
-Example Data:
-The ontology includes example instances to demonstrate functionality, such as:
-
-A sample course and instructor.
-Students enrolled in the course.
-Assignments and related submissions.
-Grades assigned to submissions.
-
-
-How to Use:
-Download the ontology file (E-Learning_Ontology.rdf) from the repository.
-Open Protégé and load the file.
-Explore the class hierarchy in the Classes tab and instances in the Individuals tab.
-Run a reasoner (e.g., HermiT) to verify logical consistency.
-
-
-Files:
-E-Learning_Ontology.rdf — Ontology file.
-E-Learning_Ontology_Document.docx — Specification document.
-
-
-Tools Used:
-Protégé
-OWL/RDF
-
-
-Created On:
-April 25, 2026
+Documentation: Generated via Widoco.
