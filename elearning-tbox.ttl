@@ -1,0 +1,175 @@
+@prefix : <http://www.example.org/elearning-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://www.example.org/elearning-ontology#> .
+
+<http://www.example.org/elearning-ontology> rdf:type owl:Ontology ;
+    dc:title "E-Learning System Ontology"@en ;
+    dc:creator "Jalil Guliyev", "Mahammadali Aliyev", "Heydar Mehdizade" ;
+    dc:description "A formal ontology designed to model the academic processes, entities, and relationships within an e-learning platform. Architecturally separated into TBox and ABox layers."@en ;
+    owl:versionInfo "2.0" ;
+    dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
+    rdfs:comment "E-Learning System Ontology - Schema (TBox)"@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+:enrolledIn rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasStudent ;
+    rdfs:domain :Student ;
+    rdfs:range :Course ;
+    rdfs:label "enrolled in"@en ;
+    rdfs:comment "Relates a Student to the Course they are enrolled in."@en .
+
+:hasAssignment rdf:type owl:ObjectProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :Assignment ;
+    rdfs:label "has assignment"@en .
+
+:hasGrade rdf:type owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain :Submission ;
+    rdfs:range :Grade ;
+    rdfs:label "has grade"@en .
+
+:hasModule rdf:type owl:ObjectProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :Module ;
+    rdfs:label "has module"@en .
+
+:hasPrerequisite rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :Course ;
+    rdfs:label "has prerequisite"@en ;
+    rdfs:comment "Transitive: if A requires B and B requires C, then A requires C."@en .
+
+:hasStudent rdf:type owl:ObjectProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :Student ;
+    rdfs:label "has student"@en .
+
+:hasSubmission rdf:type owl:ObjectProperty ;
+    owl:inverseOf :submissionFor ;
+    rdfs:domain :Assignment ;
+    rdfs:range :Submission ;
+    rdfs:label "has submission"@en .
+
+:isTaughtBy rdf:type owl:ObjectProperty , owl:FunctionalProperty ;
+    owl:inverseOf :teaches ;
+    rdfs:domain :Course ;
+    rdfs:range :Instructor ;
+    rdfs:label "is taught by"@en .
+
+:submissionFor rdf:type owl:ObjectProperty ;
+    rdfs:domain :Submission ;
+    rdfs:range :Assignment ;
+    rdfs:label "submission for"@en .
+
+:submits rdf:type owl:ObjectProperty ;
+    owl:inverseOf :submittedBy ;
+    rdfs:domain :Student ;
+    rdfs:range :Submission ;
+    rdfs:label "submits"@en .
+
+:submittedBy rdf:type owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain :Submission ;
+    rdfs:range :Student ;
+    rdfs:label "submitted by"@en .
+
+:teaches rdf:type owl:ObjectProperty ;
+    rdfs:domain :Instructor ;
+    rdfs:range :Course ;
+    rdfs:label "teaches"@en .
+
+#################################################################
+#    Data properties
+#################################################################
+
+:courseCode rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:string ;
+    rdfs:label "course code"@en .
+
+:courseTitle rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:string .
+
+:dueDate rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Assignment ;
+    rdfs:range xsd:dateTime .
+
+:hasEmail rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Student ;
+    rdfs:range xsd:string .
+
+:hasName rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Person ;
+    rdfs:range xsd:string .
+
+:score rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Grade ;
+    rdfs:range xsd:float .
+
+:submissionDate rdf:type owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Submission ;
+    rdfs:range xsd:dateTime .
+
+#################################################################
+#    Classes & Restrictions
+#################################################################
+
+:AcademicContent rdf:type owl:Class ;
+    owl:disjointWith :Person , :Assessment , :Evaluation , :Submission ;
+    rdfs:label "Academic Content"@en .
+
+:Assessment rdf:type owl:Class ;
+    rdfs:label "Assessment"@en .
+
+:Assignment rdf:type owl:Class ;
+    rdfs:subClassOf :Assessment ;
+    rdfs:label "Assignment"@en .
+
+:Course rdf:type owl:Class ;
+    rdfs:subClassOf :AcademicContent ,
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :isTaughtBy ;
+                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                      owl:onClass :Instructor
+                    ] ;
+    rdfs:label "Course"@en .
+
+:Evaluation rdf:type owl:Class ;
+    rdfs:label "Evaluation"@en .
+
+:Grade rdf:type owl:Class ;
+    rdfs:subClassOf :Evaluation ;
+    rdfs:label "Grade"@en .
+
+:Instructor rdf:type owl:Class ;
+    rdfs:subClassOf :Person ;
+    owl:disjointWith :Student ;
+    rdfs:label "Instructor"@en .
+
+:Module rdf:type owl:Class ;
+    rdfs:subClassOf :AcademicContent ;
+    rdfs:label "Module"@en .
+
+:Person rdf:type owl:Class ;
+    rdfs:label "Person"@en .
+
+:Student rdf:type owl:Class ;
+    rdfs:subClassOf :Person ,
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :enrolledIn ;
+                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                      owl:onClass :Course
+                    ] ;
+    rdfs:label "Student"@en .
+
+:Submission rdf:type owl:Class ;
+    rdfs:label "Submission"@en .
