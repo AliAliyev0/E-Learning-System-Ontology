@@ -1,78 +1,71 @@
 @prefix : <http://www.example.org/elearning-ontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.example.org/elearning-ontology-data#> .
 
-<http://www.example.org/elearning-ontology-data> rdf:type owl:Ontology ;
-    owl:imports <http://www.example.org/elearning-ontology> ;
-    rdfs:comment "E-Learning System Ontology - Data (ABox)"@en .
+# --- Kurum ve Fakülteler ---
+:EngineeringFaculty rdf:type :Faculty .
+:ComputerEngineering rdf:type :Department ;
+                     :belongsToDepartment :EngineeringFaculty ;
+                     :offersProgram :BScComputerEngineering .
+:BScComputerEngineering rdf:type :DegreeProgram .
 
-#################################################################
-#    Individuals (Data)
-#################################################################
+# --- Eğitmenler ---
+:ProfSmith rdf:type :Instructor ;
+           :hasName "Dr. Alan Smith" ;
+           :hasEmail "alan.smith@example.edu" ;
+           :belongsToDepartment :ComputerEngineering .
 
-:Assignment_GitHubRepo rdf:type owl:NamedIndividual , :Assignment ;
-    :hasSubmission :Submission_Fatma_Repo ;
-    :dueDate "2026-05-05T23:59:59"^^xsd:dateTime .
+:ProfJohnson rdf:type :Instructor ;
+             :hasName "Dr. Sarah Johnson" ;
+             :hasEmail "sarah.j@example.edu" .
 
-:Assignment_InitialOntology rdf:type owl:NamedIndividual , :Assignment ;
-    :dueDate "2026-05-05T23:59:59"^^xsd:dateTime .
+# --- Dersler ---
+:CS101 rdf:type :Course ;
+       :courseCode "CS-101" ;
+       :courseTitle "Introduction to Programming" ;
+       :credits 4 ;
+       :isTaughtBy :ProfSmith .
 
-:Assignment_SpecDoc rdf:type owl:NamedIndividual , :Assignment ;
-    :dueDate "2026-05-05T23:59:59"^^xsd:dateTime .
+:CS201 rdf:type :Course ;
+       :courseCode "CS-201" ;
+       :courseTitle "Data Structures" ;
+       :credits 5 ;
+       :hasPrerequisite :CS101 ;
+       :isTaughtBy :ProfJohnson .
 
-:Course_KnowledgeEng rdf:type owl:NamedIndividual , :Course ;
-    :hasAssignment :Assignment_GitHubRepo , :Assignment_InitialOntology , :Assignment_SpecDoc ;
-    :hasModule :Module_Week1 ;
-    :hasStudent :Student_EmilyParker , :Student_FatmaAlsaghir , :Student_HeydarMehdizade , :Student_JalilGuliyev , :Student_JamesAnderson , :Student_MahammadaliAliyev , :Student_SarahWilliams ;
-    :isTaughtBy :Instructor_ProfessorSmith ;
-    :courseCode "CS-550" ;
-    :courseTitle "Knowledge Engineering and Ontologies" .
+:CS550 rdf:type :Course ;
+       :courseCode "CS-550" ;
+       :courseTitle "Knowledge Engineering" ;
+       :credits 3 ;
+       :isTaughtBy :ProfSmith .
 
-:Grade_Fatma_Repo rdf:type owl:NamedIndividual , :Grade ;
-    :score "100.0"^^xsd:float .
+# --- Öğrenciler ve Kayıtlar ---
+:Student_Jalil rdf:type :Student ;
+               :hasName "Jalil Guliyev" ;
+               :hasEmail "jalil@student.example.edu" ;
+               :enrolledIn :CS101, :CS550 .
 
-:Instructor_ProfessorSmith rdf:type owl:NamedIndividual , :Instructor ;
-    :teaches :Course_KnowledgeEng ;
-    :hasName "Dr. Alan Smith" .
+:Student_Mahammadali rdf:type :Student ;
+                     :hasName "Mahammadali Aliyev" ;
+                     :hasEmail "mahammadali@student.example.edu" ;
+                     :enrolledIn :CS101, :CS201, :CS550 .
 
-:Module_Week1 rdf:type owl:NamedIndividual , :Module .
+:Student_Heydar rdf:type :Student ;
+                :hasName "Heydar Mehdizade" ;
+                :hasEmail "heydar@student.example.edu" ;
+                :enrolledIn :CS201, :CS550 .
 
-:Student_EmilyParker rdf:type owl:NamedIndividual , :Student ;
-    :enrolledIn :Course_KnowledgeEng ;
-    :hasName "Emily Parker" .
+# --- Ödevler, Teslimler ve Notlar ---
+:CS550_Project rdf:type :Assignment ;
+               :dueDate "2026-06-15T23:59:00"^^xsd:dateTime .
+:CS550 :hasAssignment :CS550_Project .
 
-:Student_FatmaAlsaghir rdf:type owl:NamedIndividual , :Student ;
-    :enrolledIn :Course_KnowledgeEng ;
-    :submits :Submission_Fatma_Repo ;
-    :hasEmail "fatma.alsaghir@student.example.edu" ;
-    :hasName "Fatma Alsaghir" .
+:Sub_Jalil_CS550 rdf:type :Submission ;
+                 :submittedBy :Student_Jalil ;
+                 :submissionFor :CS550_Project ;
+                 :submissionDate "2026-06-05T10:00:00"^^xsd:dateTime ;
+                 :hasGrade :Grade_Jalil_CS550 .
 
-:Student_HeydarMehdizade rdf:type owl:NamedIndividual , :Student ;
-    :enrolledIn :Course_KnowledgeEng ;
-    :hasName "Heydar Mehdizade" .
-
-:Student_JalilGuliyev rdf:type owl:NamedIndividual , :Student ;
-    :enrolledIn :Course_KnowledgeEng ;
-    :hasName "Jalil Guliyev" .
-
-:Student_JamesAnderson rdf:type owl:NamedIndividual , :Student ;
-    :enrolledIn :Course_KnowledgeEng ;
-    :hasName "James Anderson" .
-
-:Student_MahammadaliAliyev rdf:type owl:NamedIndividual , :Student ;
-    :enrolledIn :Course_KnowledgeEng ;
-    :hasName "Mahammadali Aliyev" .
-
-:Student_SarahWilliams rdf:type owl:NamedIndividual , :Student ;
-    :enrolledIn :Course_KnowledgeEng ;
-    :hasName "Sarah Williams" .
-
-:Submission_Fatma_Repo rdf:type owl:NamedIndividual , :Submission ;
-    :hasGrade :Grade_Fatma_Repo ;
-    :submissionFor :Assignment_GitHubRepo ;
-    :submittedBy :Student_FatmaAlsaghir ;
-    :submissionDate "2026-04-28T10:30:00"^^xsd:dateTime .
+:Grade_Jalil_CS550 rdf:type :Grade ;
+                   :score 95.5 .
