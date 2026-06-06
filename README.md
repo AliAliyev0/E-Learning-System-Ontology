@@ -1,25 +1,32 @@
-E-Learning System Ontology (v2)
-This project presents a formal ontology model structured to represent core components of an e-learning platform. The architecture has been refactored in Version 2 to follow professional Knowledge Engineering standards.
+# E-Learning System Ontology Development
 
-🏗 Architectural Design: TBox vs. ABox Separation
-In this version, we have decoupled the conceptual schema from the individual data to ensure a modular and scalable system architecture.
+## Project Overview
+This project involves the design and implementation of a comprehensive E-Learning System Ontology using Semantic Web technologies. The knowledge graph structurally models academic institutions, users (students and instructors), learning materials, and evaluation processes. The architecture separates the schema (TBox) and data (ABox) layers to ensure a scalable and logically consistent system capable of complex SPARQL querying and reasoning.
 
-elearning-tbox.ttl (Schema Layer): Contains the core classes (e.g., Person, Course), properties (e.g., hasPrerequisite), and logical axioms/restrictions. This layer defines the "rules" of the domain.
+## Team Members
+* Jalil Guliyev
+* Mahammadali Aliyev
+* Heydar Mehdizade
 
-elearning-abox.ttl (Data Layer): Contains the individuals (instances) and their specific relationships. This layer represents the "knowledge base" populated with real-world data.
+## Repository Contents
+* **`elearning-tbox.ttl`**: The ontology schema defining classes, object properties, and data properties.
+* **`elearning-abox.ttl`**: The populated knowledge graph (demo dataset) containing individuals and instances.
+* **`shacl-shapes.ttl`**: Validation constraints ensuring data integrity (e.g., cardinality, value ranges).
+* **`src/ELearningDataGenerator.java`**: Custom Java application used for synthetic data generation.
+* **`myDocumentation/`**: HTML documentation of the ontology generated via WIDOCO.
 
-Technical Advantages
-Modularity: The schema can be reused across different educational datasets without modification.
+## Data Acquisition & Synthetic Data Generation
+To ensure the system can be scaled to handle thousands of records, we developed a custom automated data generation pipeline rather than relying on unstructured external datasets. 
+We utilized the **Java Faker** library to programmatically generate realistic, structured datasets for students and courses. The `ELearningDataGenerator.java` script ensures that all generated data strictly conforms to the XSD data types required by our OWL ontology. The `elearning-abox.ttl` file contains a curated subset of this data tailored for presentation and proof-of-concept testing.
 
-Data Independence: The ABox can be programmatically updated (e.g., via LLM-based population) without affecting the core logic.
+## Live Documentation (WIDOCO)
+The comprehensive documentation of the classes, properties, and data models used in this ontology can be viewed here:
+👉 **[Click here to view the WIDOCO Documentation](https://alialiyev0.github.io/E-Learning-System-Ontology/myDocumentation/index-en.html)**
 
-Reasoning Efficiency: Separating assertions from axioms allows for cleaner consistency checks using OWL reasoners (HermiT/Pellet).
-
-🛠 Technical Stack
-Language: OWL 2 (Turtle Syntax)
-
-Editor: Protégé 5.x
-
-Reasoning: Transitive property chains and Cardinality restrictions for automated inference.
-
-Documentation: Generated via Widoco.
+## Setup and Usage Instructions
+1. Download or clone this repository to your local machine.
+2. Open [Protégé](https://protege.stanford.edu/).
+3. Go to `File > Open` and select the `elearning-tbox.ttl` file.
+4. The ABox (`elearning-abox.ttl`) and SHACL constraints are designed to work in conjunction with the TBox.
+5. To test logical inferences, navigate to the `Reasoner` menu, select `HermiT` or `Pellet`, and click `Start reasoner`.
+6. Navigate to the `SPARQL Query` tab in Protégé to execute queries against the populated knowledge graph.
