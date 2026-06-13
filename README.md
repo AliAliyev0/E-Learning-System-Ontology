@@ -4,9 +4,9 @@
 This project involves the design and implementation of a comprehensive E-Learning System Ontology using Semantic Web technologies. The knowledge graph structurally models academic institutions, users (students and instructors), learning materials, and evaluation processes. The architecture separates the schema (TBox) and data (ABox) layers to ensure a scalable and logically consistent system capable of complex SPARQL querying and reasoning.
 
 ## Team Members
-* Jalil Guliyev
-* Mahammadali Aliyev
-* Heydar Mehdizade
+* Jalil Guliyev - 220315102
+* Mahammadali Aliyev - 220315090
+* Heydar Mehdizade -220315091
 
 ## Repository Contents
 * **`elearning-tbox.ttl`**: The ontology schema defining classes, object properties, and data properties.
